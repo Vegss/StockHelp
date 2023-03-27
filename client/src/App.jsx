@@ -28,8 +28,6 @@ function App() {
 
   const downloadExcel = async () => {
     if (filename === '') return alert('Please enter a filename')
-    // const response = await axios.get(`http://localhost:8000/api/stocks/download`)
-    // const responseBlob = await response.blob()
     const link = document.createElement('a')
     link.href = `http://localhost:8000/api/stocks/download/${filename}`
     link.click()

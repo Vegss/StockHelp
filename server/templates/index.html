@@ -1,0 +1,32 @@
+<style>
+  body {
+    background-color: beige;
+  }
+  div {
+    background-color: white;
+    width: 500px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid black;
+  }
+
+</style>
+<body>
+  <div>
+    <form action="/addStocks" method="post">
+        <h1>Stock Symbols:</h1>
+        <input type="text" name="stock" />
+        <input type="submit" value="add" />
+    </form>
+
+    <h1>Stocks added:</h1>
+    <ul>
+        {% for stock in stocks %}
+          <li>{{ stock }}</li>
+        {% endfor %}
+    </ul>
+    <h1>Download valid stocks:</h1>
+    <a href="/download">Download</a>
+  </div>
+</body>

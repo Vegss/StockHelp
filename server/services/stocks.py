@@ -2,11 +2,15 @@ import yfinance as yf
 
 class Stock:
     def __init__(self, ticker, period=None, startDate=None, endDate=None, interval="1d"):
-        self.ticker = ticker
-        self.info = yf.Ticker(self.ticker).info
-        self.name = self.info["shortName"]
-        self.historicData = self.get_historic_data(period, startDate, endDate, interval)
-
+        try:
+            self.ticker = ticker
+            self.data = yf.Ticker(self.ticker)
+            self.info = self.data.info
+            self.name = self.info["shortName"]
+            self.historicData = self.get_historic_data(period, startDate, endDate, interval)
+        except AttributeError:
+            return None
+    
     def get_historic_data(self, period, startDate, endDate, interval):
         if startDate and endDate:
             return yf.Ticker(self.ticker).history(start=startDate, end=endDate, interval=interval)

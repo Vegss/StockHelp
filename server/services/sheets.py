@@ -4,11 +4,12 @@ import services.stocks as stockService
 
 def createSheet(stockSymbol, workbook):
 	stock = stockService.Stock(stockSymbol)
+	
+	if hasattr(stock, "name") == False:
+		return False
+	
 	stockData = stock.historicData.tz_localize(None)
 	stockData = stockData.sort_index(ascending=False).reset_index()
-
-	if stockData.empty:
-		return False
 
 	rows = stockData.shape[0]+1
 

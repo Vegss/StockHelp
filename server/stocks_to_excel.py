@@ -5,7 +5,7 @@ import os
 import sys
 import json
 
-def createWorkbook(stockSymbols):
+def createWorkbook(stockSymbols, filename):
 	if len(stockSymbols) == 0:
 		return None
 	if os.path.exists("updated.json"):
@@ -20,9 +20,12 @@ def createWorkbook(stockSymbols):
 	workbook.remove(workbook.active)
 
 	for symbol in stockSymbols:
-			sheetService.createSheet(symbol, workbook)
+		sheetService.createSheet(symbol, workbook)
 
-	workbook.save("stocks.xlsx")
+	try:
+		workbook.save(f"{filename}.xlsx")
+	except:
+		return False
 
 	info = {
 		"updated": datetime.now().strftime("%Y-%m-%d"),
@@ -33,6 +36,8 @@ def createWorkbook(stockSymbols):
 		json.dump(info, outfile)
 
 if __name__ == "__main__":
-	stockSymbols = ["AAPL", "MSFT", "AMZN", "GOOG", "TSLA", "NFLX", "NVDA", "PYPL", "ADBE"]
-	createWorkbook(stockSymbols)
-	os.system('powershell.exe /C ./stocks.xlsx')
+	filename = "stocks"
+	stockSymbols = ["ÖÖÖ"]
+	if createWorkbook(stockSymbols, filename):
+		os.system(f'powershell.exe /C ./{filename}.xlsx')
+	print('No valid stocks.')
